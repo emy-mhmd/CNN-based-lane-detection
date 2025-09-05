@@ -1,141 +1,165 @@
-Self-Driving Car – Behavioral Cloning
+# Self-Driving Car – Behavioral Cloning 
 
 This project implements a deep learning model that learns to steer a car by observing human driving behavior. The model processes images from a front-facing camera and predicts steering angles, effectively cloning human driving behavior.
 
-✨ Key Features
+---
 
-Data Augmentation: Robust augmentation techniques for better generalization
+##  Key Features
 
-CNN Architecture: Custom network inspired by NVIDIA’s self-driving car model
+- **Data Augmentation**: Robust techniques for better generalization
+- **CNN Architecture**: Custom network inspired by NVIDIA's self-driving car model
+- **Real-time Prediction**: Socket.IO server for live steering angle predictions
+- **Data Balancing**: Prevents model bias toward straight driving
+- **Preprocessing Pipeline**: Optimized image preprocessing for better model performance
 
-Real-time Prediction: Socket.IO server for live steering angle predictions
+---
 
-Data Balancing: Prevents model bias towards straight driving
+##  Demo & Presentation
+- **Watch the model in action:
 
-Preprocessing Pipeline: Optimized image preprocessing for model performance
+https://github.com/user-attachments/assets/e688e785-ad7a-4973-b3e7-72afee092e12
 
-🎥 Demo & Presentation
 
-📹 Video Demonstration
- – Watch the model in action
+- **[Project Presentation](link-to-slides)**: View the PowerPoint slides
 
-📑 Project Presentation
- – View the PowerPoint slides
+---
 
-🏗️ Model Architecture
+##  Model Architecture
 
-The network is based on NVIDIA’s architecture with modifications:
+The network is based on NVIDIA's self-driving car architecture with modifications:
 
+```
 Input: (66, 200, 3) preprocessed image
-↓
+    ↓
 Conv2D (24 filters, 5x5, strides=2x2) + ELU
-↓
+    ↓
 Conv2D (36 filters, 5x5, strides=2x2) + ELU
-↓
+    ↓
 Conv2D (48 filters, 5x5, strides=2x2) + ELU
-↓
+    ↓
 Conv2D (64 filters, 3x3) + ELU
-↓
+    ↓
 Conv2D (64 filters, 3x3) + ELU
-↓
+    ↓
 Flatten
-↓
+    ↓
 Dense (100 neurons) + ELU
-↓
+    ↓
 Dense (50 neurons) + ELU
-↓
+    ↓
 Dense (10 neurons) + ELU
-↓
+    ↓
 Output: 1 neuron (steering angle)
+```
 
-⚙️ Installation & Usage
-✅ Prerequisites
+---
 
-Python 3.7+
+##  Installation & Usage
 
-TensorFlow 2.x
+###  Prerequisites
 
-OpenCV
+- Python 3.7+
+- TensorFlow 2.x
+- OpenCV
+- Flask, SocketIO, Eventlet
+- Pandas, scikit-learn, imgaug
 
-Flask, SocketIO, Eventlet
+###  Installation
 
-🔽 Installation
-
-Clone the repository and install dependencies:
-
+```bash
 git clone https://github.com/your-username/self-driving-car.git
 cd self-driving-car
 pip install tensorflow opencv-python socketio eventlet flask pandas scikit-learn imgaug
+```
 
-🚗 Training the Model
+###  Training the Model
 
-Place training data inside the data/ folder containing:
+1. Place your training data inside the `data/` folder containing:
+   - `IMG/` directory (images)
+   - `driving_log.csv`
 
-IMG/ directory (images)
+2. Run the training script:
+   ```bash
+   python train.py
+   ```
 
-driving_log.csv
+3. The trained model will be saved as `model.h5`
 
-Run training:
+###  Running the Prediction Server
 
-python train.py
+Start the server for real-time steering predictions:
 
-
-The trained model will be saved as model.h5
-
-🔌 Running the Prediction Server
-
-Start the server for real-time steering:
-
+```bash
 python test.py
+```
+
+- Runs on port 4567
+- Waits for connections from the driving simulator
+
+---
+
+##  Technical Details
+
+###  Data Preprocessing
+
+- Crop images to focus on the road area
+- Convert RGB → YUV color space
+- Apply Gaussian blur for noise reduction
+- Resize images to 200×66 pixels
+- Normalize pixel values (scale 0–1)
+
+###  Data Augmentation
+
+- Random panning and shifting
+- Zoom variations
+- Brightness adjustments
+- Horizontal flipping (with steering angle correction)
+- Random blurring
+- Rotation transformations
+
+###  Training Approach
+
+- Balanced dataset to avoid steering bias
+- 80/20 train-validation split
+- Batch generator for efficient training
+- **Loss function**: Mean Squared Error (MSE)
+- **Optimizer**: Adam (learning rate = 1e-6)
+
+---
+
+##  Results
+
+-  Low validation loss → strong generalization
+-  Smooth steering predictions under varied conditions
+-  Stable performance due to diverse augmentations
+
+---
 
 
-Runs on port 4567
 
-Waits for connections from the driving simulator
+##  Getting Started
 
-🔧 Technical Details
-🖼️ Data Preprocessing
+1. **Clone the repository**
+2. **Install dependencies**
+3. **Prepare your training data**
+4. **Train the model**
+5. **Run the prediction server**
+6. **Connect your driving simulator**
 
-Cropping to focus on road area
+---
 
-RGB → YUV color space conversion
+##  Contributing
 
-Gaussian blur for noise reduction
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Resizing to 200×66 pixels
+---
 
-Normalization (pixel values scaled 0–1)
 
-🧪 Data Augmentation
 
-Random panning & shifting
 
-Zoom variations
 
-Brightness adjustments
+## 🙏 Acknowledgments
 
-Horizontal flipping (with steering angle correction)
-
-Random blurring
-
-Rotation transformations
-
-📚 Training Approach
-
-Balanced dataset to avoid steering bias
-
-80/20 train-validation split
-
-Batch generator for efficiency
-
-Loss: Mean Squared Error (MSE)
-
-Optimizer: Adam (lr = 1e-6)
-
-📊 Results
-
-Achieved low validation loss → strong generalization
-
-Smooth steering predictions in varied conditions
-
-Stable performance due to diverse augmentations
+- NVIDIA's End-to-End Deep Learning for Self-Driving Cars paper https://images.nvidia.com/content/tegra/automotive/images/2016/solutions/pdf/end-to-end-dl-using-px.pdf
+- Udacity Self-Driving Car Nanodegree program
+- The autonomous driving community
