@@ -15,12 +15,12 @@ This project implements a deep learning model that learns to steer a car by obse
 ---
 
 ##  Demo & Presentation
-- **Watch the model in action:
+- Watch the model in action:
 
 https://github.com/user-attachments/assets/e688e785-ad7a-4973-b3e7-72afee092e12
 
 
-- **[Project Presentation](link-to-slides)**: View the PowerPoint slides
+
 
 ---
 
